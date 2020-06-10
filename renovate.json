@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "config:base",
+    ":automergeMajor",
+    ":prHourlyLimitNone"
+  ],
+  "packageRules": [
+    {
+      "packagePatterns": ["^org.spekframework.spek2:"],
+      "groupName": "Spek"
+    },
+    {
+      "packagePatterns": ["^org.jetbrains.kotlin:"],
+      "groupName": "Kotlin"
+    },
+    {
+      "packagePatterns": ["^com.github.jcornaz.kwik:"],
+      "groupName": "Kwik"
+    }
+  ]
+}

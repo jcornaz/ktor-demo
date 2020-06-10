@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - master
+    - '*.*'
+
+  pull_request:
+    branches: 
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Validate gradle wrapper
+      uses: gradle/wrapper-validation-action@v1
+      
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 13
+
+    - name: Gradle global cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: gradle-cache-${{ matrix.java }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.kt*') }}
+        restore-keys: |
+          gradle-cache-${{ matrix.java }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          
+    - name: Gradle wrapper cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/wrapper
+        key: gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+    - name: Run gradle check
+      run: ./gradlew check --no-daemon

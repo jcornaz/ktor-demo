@@ -1,0 +1,20 @@
+# Log file
+*.log
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Build
+.gradle/
+build/
+docs/_build/
+
+# IDE
+.idea/
+out/
+*.iml
+
+# Operating systems
+.DS_Store
+.trashes
+*.db
