@@ -1,38 +1,43 @@
 plugins {
-    application
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.serialization") version "1.3.72"
-    id("com.github.johnrengelman.shadow") version "5.2.0"
+  application
+  kotlin("jvm") version "1.3.72"
+  kotlin("plugin.serialization") version "1.3.72"
+  id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
 repositories {
-    mavenCentral()
-    jcenter()
+  mavenCentral()
+  jcenter()
 }
 
 val ktorVersion = "1.3.2"
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    testImplementation(kotlin("test"))
 
-    // Chose an engine
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+  // Just regular Kotlin setup
+  implementation(kotlin("stdlib"))
+  testImplementation(kotlin("test"))
+  testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 
-    // Add the optional feature you'd like to use
-    implementation("io.ktor:ktor-serialization:$ktorVersion")
-    implementation("io.ktor:ktor-html-builder:$ktorVersion")
+  // A server engine
+  implementation("io.ktor:ktor-server-netty:$ktorVersion")
 
-    // Add a logger implementation
-    runtimeOnly("org.slf4j:slf4j-simple:1.7.30")
+  // Optional features
+  implementation("io.ktor:ktor-serialization:$ktorVersion")
+  implementation("io.ktor:ktor-auth:$ktorVersion")
+  implementation("io.ktor:ktor-html-builder:$ktorVersion")
+  implementation("io.ktor:ktor-server-test-host:$ktorVersion")
+
+  // Logger
+  runtimeOnly("org.slf4j:slf4j-simple:1.7.30")
 }
 
 application {
-    mainClassName = "com.github.jcornaz.demo.ktor.MainKt"
+  mainClassName = "com.github.jcornaz.demo.ktor.MainKt"
 }
 
 tasks {
-    withType<Test> {
-        useJUnitPlatform()
-    }
+  withType<Test> {
+    useJUnitPlatform()
+  }
 }
