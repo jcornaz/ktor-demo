@@ -16,6 +16,9 @@ import io.ktor.serialization.json
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import kotlinx.serialization.Serializable
+import org.koin.dsl.module
+import org.koin.ktor.ext.Koin
+import org.koin.ktor.ext.inject
 
 private class MissingRequiredParameter(val parameter: String) : Exception()
 private class Unauthorized : Exception()
@@ -32,6 +35,20 @@ data class MyData(
 )
 
 data class MyUser(val name: String) : Principal
+
+interface UserRepo {
+  suspend fun findByNameAndPassword(name: String, password: String): MyUser?
+}
+
+class InMemoryUserRepo : UserRepo {
+  override suspend fun findByNameAndPassword(name: String, password: String): MyUser? {
+    return if (name == "JUGS" && password == "ktor") {
+      MyUser(name)
+    } else {
+      null
+    }
+  }
+}
 
 fun main() {
   val server = embeddedServer(Netty, port = 8080) {
@@ -63,14 +80,18 @@ fun Application.myApp() {
     json()
   }
 
+  install(Koin) {
+    modules(module {
+      single<UserRepo> { InMemoryUserRepo() }
+    })
+  }
+
+  val userRepo: UserRepo by inject()
+
   install(Authentication) {
     basic {
       validate { (name, password) ->
-        if (name == "JUGS" && password == "ktor") {
-          MyUser(name)
-        } else {
-          null
-        }
+        userRepo.findByNameAndPassword(name, password)
       }
     }
   }
