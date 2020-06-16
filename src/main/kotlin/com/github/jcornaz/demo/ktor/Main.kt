@@ -1,9 +1,12 @@
+package com.github.jcornaz.demo.ktor
+
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.*
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
+import io.ktor.html.respondHtml
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -14,6 +17,7 @@ import io.ktor.routing.routing
 import io.ktor.serialization.json
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import kotlinx.html.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -47,6 +51,21 @@ fun Application.myApp() {
   }
 
   routing {
+    get("/ui") {
+        call.respondHtml {
+            head {
+                title { +"Ktor demo" }
+            }
+            body {
+                h1 { +"Ktor is cool because:" }
+                ul {
+                    li { +"Idiomatic, simple and safe Kotlin DSL" }
+                    li { +"Asynchronous with coroutines" }
+                }
+            }
+        }
+    }
+
     get("/") {
       val name = call.parameters["name"] ?: "world"
       call.respondText { "Hello $name!" }
@@ -57,7 +76,7 @@ fun Application.myApp() {
       call.respondText { "Hello $name!" }
     }
 
-    post("people") {
+    post("/person") {
       val person: Person = call.receive()
       call.respond(HttpStatusCode.Created, person)
     }
@@ -72,6 +91,6 @@ fun Application.myApp() {
 }
 
 fun main() {
-  embeddedServer(Netty, port = 8081, module = Application::myApp)
+  embeddedServer(Netty, port = 8080, module = Application::myApp)
       .start(wait = true)
 }

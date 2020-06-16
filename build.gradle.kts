@@ -26,7 +26,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization:$ktorVersion")        // Content negotiation & serialization
     implementation("io.ktor:ktor-auth:$ktorVersion")                 // Authentication
     implementation("io.ktor:ktor-html-builder:$ktorVersion")         // Html builders
-    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion") // Testing tools
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion") // Test server engine
 
     // Some tools work well with Ktor. This one is a dependency injection framework.
     implementation("org.koin:koin-ktor:2.1.6")
