@@ -16,9 +16,8 @@ class MyAppTest {
 
         assert(call.requestHandled)
 
-        with(call.response) {
-            assertEquals(HttpStatusCode.OK, status())
-            assertEquals("Hello test!", content)
-        }
+        val response = call.response
+        assertEquals(HttpStatusCode.OK, response.status())
+        assertEquals("Hello test!", response.content)
     }
 }
