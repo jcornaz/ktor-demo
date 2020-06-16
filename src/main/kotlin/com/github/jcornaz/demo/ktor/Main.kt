@@ -22,9 +22,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Person(
-    val firstName: String,
-    val lastName: String,
-    val age: Int
+  val firstName: String,
+  val lastName: String,
+  val age: Int
 )
 
 @Serializable
@@ -40,7 +40,6 @@ fun Application.myApp() {
   install(Authentication) {
     basic {
       validate { (username, password) ->
-        println("validating ($username:$password)")
         if (username == "john.doe" && password == "12345") {
           User(username, true)
         } else {
@@ -52,18 +51,18 @@ fun Application.myApp() {
 
   routing {
     get("/ui") {
-        call.respondHtml {
-            head {
-                title { +"Ktor demo" }
-            }
-            body {
-                h1 { +"Ktor is cool because:" }
-                ul {
-                    li { +"Idiomatic, simple and safe Kotlin DSL" }
-                    li { +"Asynchronous with coroutines" }
-                }
-            }
+      call.respondHtml {
+        head {
+          title { +"Ktor demo" }
         }
+        body {
+          h1 { +"Ktor is cool because:" }
+          ul {
+            li { +"Idiomatic, simple and safe Kotlin DSL" }
+            li { +"Asynchronous with coroutines" }
+          }
+        }
+      }
     }
 
     get("/") {
@@ -92,5 +91,5 @@ fun Application.myApp() {
 
 fun main() {
   embeddedServer(Netty, port = 8080, module = Application::myApp)
-      .start(wait = true)
+    .start(wait = true)
 }
