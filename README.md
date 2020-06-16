@@ -2,7 +2,7 @@
 
 This is a demonstration project used for presenting [Kotor](https://ktor.io) at a [JUGS event](https://www.jug.ch/html/events/2020/kotlin_with_ktor.html).
 
-Here are the slide used for the presentation: https://slides.com/jcornaz/ktor
+Here are the slides used for the presentation: https://slides.com/jcornaz/ktor
 
 ## How to build and run the server
 
