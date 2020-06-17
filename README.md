@@ -1,6 +1,6 @@
 # Ktor demo
 
-This is a demonstration project used for presenting [Ktor](https://ktor.io) at a [JUGS event](https://www.jug.ch/html/events/2020/kotlin_with_ktor.html).
+This is a demonstration project used for presenting [Ktor](https://ktor.io) at a [Java User Group event](https://www.jug.ch/html/events/2020/kotlin_with_ktor.html).
 
 Here are the slides used for the presentation: https://slides.com/jcornaz/ktor
 
